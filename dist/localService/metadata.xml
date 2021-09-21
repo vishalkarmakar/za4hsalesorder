@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="http://vhcala4hci:50000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://vhcala4hci:50000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://vhcala4hci:50000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://vhcala4hci:50000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://vhcala4hci:50000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZA4H_C_SALES_ORDER_CDS" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZA4H_C_SALES_ORDERType" sap:label="Composite View for Sales Order" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="node_key"/>
+                </Key>
+                <Property Name="node_key" Type="Edm.Guid" Nullable="false" sap:label="Node Key" sap:quickinfo="EPM: Generic Node Key"/>
+                <Property Name="so_id" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Sales Order ID" sap:quickinfo="EPM: Sales Order Number"/>
+                <Property Name="gross_amount" Type="Edm.Decimal" Precision="16" Scale="3" sap:unit="currency_code" sap:label="Gross Amount" sap:quickinfo="EPM: Total Gross Amount"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="5" sap:label="Currency Code" sap:quickinfo="EPM: Currency Code" sap:semantics="currency-code"/>
+                <Property Name="bp_id" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Business Partner ID" sap:quickinfo="EPM: Business Partner ID"/>
+                <Property Name="company_name" Type="Edm.String" MaxLength="80" sap:label="Company" sap:quickinfo="EPM: Company Name"/>
+                <NavigationProperty Name="to_itm" Relationship="ZA4H_C_SALES_ORDER_CDS.assoc_888B2C19806E7B9EE68572BB1624DA5C" FromRole="FromRole_assoc_888B2C19806E7B9EE68572BB1624DA5C" ToRole="ToRole_assoc_888B2C19806E7B9EE68572BB1624DA5C"/>
+            </EntityType>
+            <EntityType Name="ZA4H_I_SALES_ORDER_ITEMType" sap:label="Interface View for Sales Order Item Data" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="parent_key"/>
+                    <PropertyRef Name="node_key"/>
+                </Key>
+                <Property Name="parent_key" Type="Edm.Guid" Nullable="false" sap:label="Node Key" sap:quickinfo="EPM: Generic Node Key"/>
+                <Property Name="node_key" Type="Edm.Guid" Nullable="false" sap:label="Node Key" sap:quickinfo="EPM: Generic Node Key"/>
+                <Property Name="so_item_pos" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Item Position" sap:quickinfo="EPM: Sales Order Item Position"/>
+                <Property Name="product_id" Type="Edm.String" MaxLength="10" sap:label="Product ID" sap:quickinfo="EPM: Product ID"/>
+                <Property Name="text" Type="Edm.String" MaxLength="255" sap:label="Description" sap:quickinfo="EPM: Text field for names and descriptions"/>
+                <Property Name="category" Type="Edm.String" MaxLength="40" sap:label="Category" sap:quickinfo="EPM: Product Category"/>
+                <Property Name="gross_amount" Type="Edm.Decimal" Precision="16" Scale="3" sap:unit="currency_code" sap:label="Gross Amount" sap:quickinfo="EPM: Total Gross Amount"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="5" sap:label="Currency Code" sap:quickinfo="EPM: Currency Code" sap:semantics="currency-code"/>
+            </EntityType>
+            <Association Name="assoc_888B2C19806E7B9EE68572BB1624DA5C" sap:content-version="1">
+                <End Type="ZA4H_C_SALES_ORDER_CDS.ZA4H_C_SALES_ORDERType" Multiplicity="1" Role="FromRole_assoc_888B2C19806E7B9EE68572BB1624DA5C"/>
+                <End Type="ZA4H_C_SALES_ORDER_CDS.ZA4H_I_SALES_ORDER_ITEMType" Multiplicity="*" Role="ToRole_assoc_888B2C19806E7B9EE68572BB1624DA5C"/>
+            </Association>
+            <EntityContainer Name="ZA4H_C_SALES_ORDER_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZA4H_C_SALES_ORDER" EntityType="ZA4H_C_SALES_ORDER_CDS.ZA4H_C_SALES_ORDERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZA4H_I_SALES_ORDER_ITEM" EntityType="ZA4H_C_SALES_ORDER_CDS.ZA4H_I_SALES_ORDER_ITEMType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_888B2C19806E7B9EE68572BB1624DA5C" Association="ZA4H_C_SALES_ORDER_CDS.assoc_888B2C19806E7B9EE68572BB1624DA5C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZA4H_C_SALES_ORDER" Role="FromRole_assoc_888B2C19806E7B9EE68572BB1624DA5C"/>
+                    <End EntitySet="ZA4H_I_SALES_ORDER_ITEM" Role="ToRole_assoc_888B2C19806E7B9EE68572BB1624DA5C"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="ZA4H_C_SALES_ORDER_CDS.ZA4H_C_SALES_ORDER_CDS_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="http://vhcala4hci:50000/sap/opu/odata/sap/ZA4H_C_SALES_ORDER_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://vhcala4hci:50000/sap/opu/odata/sap/ZA4H_C_SALES_ORDER_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

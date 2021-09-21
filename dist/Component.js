@@ -1,0 +1,1 @@
+sap.ui.define(["sap/suite/ui/generic/template/lib/AppComponent"],function(e){return e.extend("za4h.epm.za4hsalesorder.Component",{metadata:{manifest:"json"}})});
